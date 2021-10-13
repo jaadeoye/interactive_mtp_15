@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OPMD malignant transformation prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+  </head>
+  <body>
+      <div class="block">
+          <section class="hero is-dark is-bold">
+              <div class="hero-body">
+                  <div class="container has-text-centered">
+                      <h1 class="title">Prediction of malignant transformation in oral leukoplakia and oral lichenoid lesions</h1>
+                      <h2 class="subtitle">15 input feature models - WLR and GB-ADASYN</h2>
+                  </div><br>
+                  <div class="container has-text-centered">
+                        <a href="{{url_for('index')}}" class="button is-info is-rounded has-text-centered">Reset</a>
+                  </div>
+
+              </div>
+          </section>
+      </div>
+      <article class="message is-info">
+          <div class="message-header">
+              <p>Input variables</p>
+          </div>
+          <div class="message-body">
+            <div class="card">
+                <!--
+                <header class="card-header">
+                    <p class="card-header-title is-centered">Input variables</p>
+                </header> -->
+                <div class="card-content">
+                    <form action="{{ url_for('analyze') }}" method="POST">
+                        <div class="columns">
+                            <div class="column">
+                                    <div class="field">
+                                            <label for="P1" class="label">Patient age</label>
+                                            <div class="control">
+                                                <input type="number" name="P1" class="input" placeholder="Number between 18 and 100" min="18" max="100" step="1.0">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P2" class="label">Gender</label>
+                                                <div class="select is-link">
+                                                        <select name="P2" id="P2">
+                                                            <option value="1">Female</option>
+                                                            <option value="2">Male</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P12" class="label">Type of lesion</label>
+                                                <div class="select is-link">
+                                                        <select name="P12" id="P12">
+                                                            <option value="1">Oral leukoplakia</option>
+                                                            <option value="2">Oral lichenoid lesion</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P13" class="label">Type of lichenoid lesion</label>
+                                                <div class="select is-link">
+                                                        <select name="P13" id="P13">
+                                                            <option value="1">Reticular/Papular</option>
+                                                            <option value="2">Erosive/Atrophic</option>
+							<option value="3">Plaque</option>
+							<option value="4">Not applicable</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P14" class="label">Tongue involvement</label>
+                                                <div class="select is-link">
+                                                        <select name="P14" id="P14">
+                                                            <option value="1">Yes</option>
+                                                            <option value="0">No</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P15" class="label">Buccal/labial mucosa involvement</label>
+                                                <div class="select is-link">
+                                                        <select name="P15" id="P15">
+                                                            <option value="1">Yes</option>
+                                                            <option value="0">No</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P16" class="label">Retromolar area involvement</label>
+                                                <div class="select is-link">
+                                                        <select name="P16" id="P16">
+                                                            <option value="1">Yes</option>
+                                                            <option value="0">No</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P17" class="label">Gingiva involvement</label>
+                                                <div class="select is-link">
+                                                        <select name="P17" id="P17">
+                                                            <option value="1">Yes</option>
+                                                            <option value="0">No</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="column">
+                                    <div class="field">
+                                            <label for="P18" class="label">Palate involvement</label>
+                                                <div class="select is-link">
+                                                        <select name="P18" id="P18">
+                                                            <option value="1">Yes</option>
+                                                            <option value="0">No</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P20" class="label">Presence of ulcers or red form</label>
+                                                <div class="select is-link">
+                                                        <select name="P20" id="P20">
+                                                            <option value="1">Yes</option>
+                                                            <option value="0">No</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P22" class="label">Treatment type</label>
+                                                <div class="select is-link">
+                                                        <select name="P22" id="P22">
+                                                            <option value="1">Surgical intervention</option>
+                                                            <option value="2">Pharmacological treatment</option>
+							<option value="3">No treatment</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P23" class="label">Recurrence following surgical intervention</label>
+                                                <div class="select is-link">
+                                                        <select name="P23" id="P23">
+                                                            <option value="0">No recurrence</option>
+                                                            <option value="1">Recurrence</option>
+							<option value="2">Not applicable - No surgical intervention</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P24" class="label">Number of recurrence</label>
+                                                <div class="select is-link">
+                                                        <select name="P24" id="P24">
+                                                            <option value="0">Not applicable</option>
+                                                            <option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">>3</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P25" class="label">Oral epithelial dysplasia - diagnostic biopsy</label>
+                                                <div class="select is-link">
+                                                        <select name="P25" id="P25">
+                                                            <option value="0">No dysplasia</option>
+                                                            <option value="1">Mild dysplasia</option>
+							<option value="2">Moderate dysplasia</option>
+							<option value="3">Severe dysplasia</option>
+							<option value="4">Unknown - Patient refused biopsy</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="P26" class="label">Oral epithelial dysplasia - follow-up biopsy</label>
+                                                <div class="select is-link">
+                                                        <select name="P26" id="P26">
+                                                            <option value="0">No dysplasia/No follow-up</option>
+                                                            <option value="1">Mild dysplasia</option>
+							<option value="2">Moderate dysplasia</option>
+							<option value="3">Severe dysplasia</option>
+							<option value="4">Unknown - Patient refused biopsy during follow-up</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                            </div>
+                        </div>
+
+
+                      <br>
+                      <div class="container has-text-centered">
+                            <div class="field">
+                                    <label for="role" class="label">Select Model</label>
+                                    <div class="control">
+                                        <div class="container has-text-centered">
+                                                <div class="select is-success">
+                                                        <select name="model_choice" id="role">
+                                                            <option value="weighted_logistic_regression">Weighted logistic regression</option>
+                                                            <option value="gradient_boosting_adasyn">Gradient boosting with ADASYN resampling</option>
+                                                        </select>
+                                                    </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br>
+                                <button class="button is-primary" type="submit">Predict</button>
+                                <button class="button" type="reset">Clear</button>
+                      </div>
+
+                    </form>
+                </div>
+            </div>
+          </div>
+      </article>
+
+      <footer class="footer">
+            <div class="content has-text-centered">
+              <p>
+                <strong>Oral Cancer Research Theme, HKU  |  2021 </strong>.<br>
+                <a href="https://facdent.hku.hk/research/oral-cancer.html">Website</a> | <a href="https://github.com/jaadeoye">Bug Report</a>
+              </p>
+            </div>
+          </footer>
+  </body>
+</html>
